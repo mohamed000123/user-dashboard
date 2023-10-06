@@ -1,6 +1,6 @@
 export default function BasicCard({ parcel }) {
   return (
-    <div className="parcel" key={parcel.id}>
+    <div className="parcel" >
       <p>
         parcel name:
         <span style={{ color: "blue" }}>{parcel.name}</span>

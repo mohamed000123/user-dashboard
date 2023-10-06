@@ -13,12 +13,12 @@ function CreateParcel() {
   async function addParcel(e) {
     e.preventDefault();
     try {
-      const res = await fetch("http://localhost:8000/parcel/create", {
+      const res = await fetch("http://localhost:8000/create-parcel", {
         method: "POST",
         body: JSON.stringify({
           pickupAddress: pickup,
           deliveryAddress: dropOff,
-          name:name
+          name: name,
         }),
         headers: { "Content-Type": "application/json" },
         credentials: "include",
