@@ -1,10 +1,9 @@
 // styling
 import styles from "./login.module.css";
 // react
-import { useEffect, useState, useRef, useContext } from "react";
+import { useEffect, useState, useRef } from "react";
 // routing
 import { NavLink, useNavigate } from "react-router-dom";
-import { userContext } from "../App";
 const Signup = () => {
   //logged in user redirect
   const navigate = useNavigate();
@@ -13,8 +12,6 @@ const Signup = () => {
       navigate("/");
     }
   }, []);
-  //
-  const { setUserId } = useContext(userContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -56,7 +53,7 @@ const Signup = () => {
         });
         const data = await res.json();
         if (data.userId) {
-          setUserId(data.userId);
+          localStorage.setItem("userId", data.userId);
           navigate("/");
         }
       } catch (err) {

@@ -1,8 +1,7 @@
 import { useEffect, useState, useContext } from "react";
 import BasicCard from "../components/card";
-import { userContext } from "../App";
 function ParcelsList() {
-  const { userId } = useContext(userContext);
+  const userId = JSON.parse(localStorage.getItem("userId"));
   const [parcels, setParcels] = useState([]);
   useEffect(() => {
     async function getData() {
