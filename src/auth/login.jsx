@@ -17,26 +17,46 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
-
+  const [isValiedMail, setIsValidMail] = useState(false);
+  const [isValiedPassword, setIisValiedPassword] = useState(false);
+  const mailWarning = useRef();
+  const passwordWarning = useRef();
   // login
   async function login(e) {
     e.preventDefault();
-    const type = "User";
-    try {
-      const res = await fetch("http://localhost:8000/login", {
-        method: "POST",
-        body: JSON.stringify({ email, password, type }),
-        headers: { "Content-Type": "application/json" },
-        credentials: "include",
-      });
-      const data = await res.json();
-      if (data.userId) {
-        navigate("/");
-      } else {
-        setError(data.message);
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const emailIsValid = emailRegex.test(email);
+    if (!emailIsValid) {
+      mailWarning.current.style.display = "block";
+    } else {
+      mailWarning.current.style.display = "none";
+      setIsValidMail(true);
+    }
+    if (password.length < 8) {
+      passwordWarning.current.style.display = "block";
+    } else {
+      passwordWarning.current.style.display = "none";
+      setIisValiedPassword(true);
+    }
+     
+    if (isValiedMail && isValiedPassword) {
+      try {
+        const type = "User";
+        const res = await fetch("http://localhost:8000/login", {
+          method: "POST",
+          body: JSON.stringify({ email, password, type }),
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+        });
+        const data = await res.json();
+        if (data.userId) {
+          navigate("/");
+        } else {
+          setError(data.message);
+        }
+      } catch (err) {
+        console.log(err);
       }
-    } catch (err) {
-      console.log(err);
     }
   }
 
@@ -54,6 +74,9 @@ const Login = () => {
               setEmail(e.target.value);
             }}
           />
+          <p ref={mailWarning} className={styles.mailWarning}>
+            Please enter valid mail
+          </p>
           <label for="password">Password</label>
           <input
             id="password"
@@ -63,7 +86,10 @@ const Login = () => {
               setPassword(e.target.value);
             }}
           />
-          {error && <p style={{color:"red"}}>{error}</p>}
+          <p ref={passwordWarning} className={styles.passwordWarning}>
+            Password should be at least 8 characters long
+          </p>
+          {error && <p style={{ color: "red" }}>{error}</p>}
           <button id="loginBtn" onClick={login}>
             Log In
           </button>

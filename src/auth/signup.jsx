@@ -28,7 +28,7 @@ const Signup = () => {
     e.preventDefault();
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const emailIsValid = emailRegex.test(email);
-    if (!email || !emailIsValid) {
+    if (!emailIsValid) {
       mailWarning.current.style.display = "block";
     } else {
       mailWarning.current.style.display = "none";
