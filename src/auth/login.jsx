@@ -66,7 +66,7 @@ const Login = () => {
       <div className={styles.container}>
         <form className={styles.form}>
           <h3>Login Here</h3>
-          <label for="email">Email</label>
+          <label>Email</label>
           <input
             id="email"
             type="text"
@@ -78,7 +78,7 @@ const Login = () => {
           <p ref={mailWarning} className={styles.warning}>
             Please enter valid mail
           </p>
-          <label for="password">Password</label>
+          <label>Password</label>
           <input
             id="password"
             type="password"

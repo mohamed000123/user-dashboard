@@ -35,6 +35,7 @@ function Nav(props) {
       headers: { "Content-Type": "application/json" },
       credentials: "include",
     }).then(() => {
+      localStorage.removeItem("userId")
       navigate("/login");
     });
   }
