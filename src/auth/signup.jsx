@@ -1,20 +1,20 @@
 // styling
 import styles from "./login.module.css";
 // react
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 // routing
 import { NavLink, useNavigate } from "react-router-dom";
-// uuid
+import { userContext } from "../App";
 const Signup = () => {
   //logged in user redirect
   const navigate = useNavigate();
   useEffect(() => {
-    const userid = localStorage.getItem("user_id");
-    if (userid) {
+    if (document.cookie) {
       navigate("/");
     }
   }, []);
   //
+  const { setUserId } = useContext(userContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -36,7 +36,7 @@ const Signup = () => {
     }
     if (password.length < 8) {
       passwordWarning.current.style.display = "block";
-    }else{
+    } else {
       passwordWarning.current.style.display = "none";
     }
     if (password !== confirmPassword) {
@@ -56,6 +56,7 @@ const Signup = () => {
         });
         const data = await res.json();
         if (data.userId) {
+          setUserId(data.userId);
           navigate("/");
         }
       } catch (err) {
@@ -78,7 +79,7 @@ const Signup = () => {
               setEmail(e.target.value);
             }}
           />
-          <p ref={mailWarning} className={styles.mailWarning}>
+          <p ref={mailWarning} className={styles.warning}>
             Please enter valid mail
           </p>
           <label>Password</label>
@@ -90,7 +91,7 @@ const Signup = () => {
               setPassword(e.target.value);
             }}
           />
-          <p ref={passwordWarning} className={styles.passwordWarning}>
+          <p ref={passwordWarning} className={styles.warning}>
             Password should be at least 8 characters long
           </p>
           <label>Confirm Password</label>
@@ -102,7 +103,7 @@ const Signup = () => {
               setConfirmPassword(e.target.value);
             }}
           />
-          <p ref={passwordConfirmWarning} className={styles.passwordWarning}>
+          <p ref={passwordConfirmWarning} className={styles.warning}>
             unmatched password
           </p>
           <button id="btn" onClick={signUp}>

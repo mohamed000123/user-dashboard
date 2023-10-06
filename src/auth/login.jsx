@@ -1,19 +1,20 @@
 // react
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useContext } from "react";
 // styling
 import styles from "./login.module.css";
 // routing
 import { NavLink, useNavigate } from "react-router-dom";
+import { userContext } from "../App";
 const Login = () => {
   // logged in user redirect
   const navigate = useNavigate();
   useEffect(() => {
-    const userid = localStorage.getItem("user_id");
-    if (userid) {
+    if (document.cookie) {
       navigate("/");
     }
   }, []);
   //
+  const { setUserId } = useContext(userContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(false);
@@ -38,7 +39,7 @@ const Login = () => {
       passwordWarning.current.style.display = "none";
       setIisValiedPassword(true);
     }
-     
+
     if (isValiedMail && isValiedPassword) {
       try {
         const type = "User";
@@ -50,6 +51,7 @@ const Login = () => {
         });
         const data = await res.json();
         if (data.userId) {
+          setUserId(data.userId);
           navigate("/");
         } else {
           setError(data.message);
@@ -74,7 +76,7 @@ const Login = () => {
               setEmail(e.target.value);
             }}
           />
-          <p ref={mailWarning} className={styles.mailWarning}>
+          <p ref={mailWarning} className={styles.warning}>
             Please enter valid mail
           </p>
           <label for="password">Password</label>
@@ -86,7 +88,7 @@ const Login = () => {
               setPassword(e.target.value);
             }}
           />
-          <p ref={passwordWarning} className={styles.passwordWarning}>
+          <p ref={passwordWarning} className={styles.warning}>
             Password should be at least 8 characters long
           </p>
           {error && <p style={{ color: "red" }}>{error}</p>}

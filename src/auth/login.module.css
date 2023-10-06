@@ -17,7 +17,7 @@ body {
   border-radius: 10px;
   border: 2px solid rgba(255, 255, 255, 0.1);
   box-shadow: 0 0 10px rgba(8, 7, 16, 0.6);
-  padding: 30px 35px;
+  padding: 15px 35px;
 }
 
 .form h3 {
@@ -25,6 +25,7 @@ body {
   font-weight: 500;
   line-height: 42px;
   text-align: center;
+  margin: 0px;
 }
 
 .form label {
@@ -50,7 +51,7 @@ body {
 }
 
 .form button {
-  margin-top: 50px;
+  margin-top: 30px;
   width: 100%;
   background-color: #ccc;
   color: #080710;
@@ -68,18 +69,6 @@ body {
   color: green;
 }
 .warning {
-  color: red;
-  margin-top: 20px;
-  display: none;
-}
-
-.mailWarning {
-  color: red;
-  margin-top: 20px;
-  display: none;
-}
-
-.passwordWarning {
   color: red;
   margin-top: 20px;
   display: none;

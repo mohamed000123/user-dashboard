@@ -5,7 +5,9 @@ import Signup from "./auth/signup";
 import Main from "./components/main";
 //css
 import "./App.css";
-// routing
+// react
+import { createContext, useState } from "react";
+
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -21,8 +23,15 @@ const appRouter = createBrowserRouter(
     </>
   )
 );
+
+export const userContext = createContext();
 function App() {
-  return <RouterProvider router={appRouter} />;
+  const [userId, setUserId] = useState("user id");
+  return (
+    <userContext.Provider value={{ userId, setUserId }}>
+      <RouterProvider router={appRouter} />
+    </userContext.Provider>
+  );
 }
 
 export default App;
