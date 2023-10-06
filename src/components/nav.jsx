@@ -72,10 +72,9 @@ function Nav(props) {
       sx={{
         display: "flex",
       }}
-      className={page == "home" ? "navBar position" : "navBar"}
     >
       <CssBaseline />
-      <AppBar component="nav" className={page == "home" ? "transparent" : null}>
+      <AppBar>
         <Toolbar>
           <IconButton
             color="inherit"
@@ -131,10 +130,6 @@ function Nav(props) {
 }
 
 Nav.propTypes = {
-  /**
-   * Injected by the documentation to work in an iframe.
-   * You won't need it on your project.
-   */
   window: PropTypes.func,
 };
 
