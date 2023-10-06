@@ -53,7 +53,6 @@ const Signup = () => {
         });
         const data = await res.json();
         if (data.userId) {
-          localStorage.setItem("userId", data.userId);
           navigate("/");
         }
       } catch (err) {

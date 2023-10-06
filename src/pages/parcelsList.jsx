@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import BasicCard from "../components/card";
 function ParcelsList() {
-  const userId  = localStorage.getItem("userId")
   const [parcels, setParcels] = useState([]);
   useEffect(() => {
     async function getData() {
       try {
         const res = await fetch(
-          `http://localhost:8000/all-parcels/user/${userId}`,
+          `http://localhost:8000/all-parcels/user`,
           {
             credentials: "include",
           }

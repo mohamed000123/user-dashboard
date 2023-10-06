@@ -50,7 +50,6 @@ const Login = () => {
         });
         const data = await res.json();
         if (data.userId) {
-          localStorage.setItem("userId", JSON.stringify(data.userId));
           navigate("/");
         } else {
           setError(data.message);
