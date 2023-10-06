@@ -20,9 +20,8 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isValiedMail, setIsValidMail] = useState(false);
   const [isValiedPassword, setIisValiedPassword] = useState(false);
-  const warning = useRef();
-  const passwordWarning = useRef();
   const mailWarning = useRef();
+  const passwordWarning = useRef();
   const passwordConfirmWarning = useRef();
 
   async function signUp(e) {
@@ -32,20 +31,21 @@ const Signup = () => {
     if (!email || !emailIsValid) {
       mailWarning.current.style.display = "block";
     } else {
-      setIsValidMail(true);
       mailWarning.current.style.display = "none";
+      setIsValidMail(true);
     }
-    if (password.length <= 8) {
+    if (password.length < 8) {
       passwordWarning.current.style.display = "block";
+    }else{
+      passwordWarning.current.style.display = "none";
     }
     if (password !== confirmPassword) {
       passwordConfirmWarning.current.style.display = "block";
     } else {
-      setIisValiedPassword(true);
-      passwordWarning.current.style.display = "none";
       passwordConfirmWarning.current.style.display = "none";
+      setIisValiedPassword(true);
     }
-    if (isValiedMail && isValiedPassword) {
+    if (isValiedMail && password.length && isValiedPassword) {
       const type = "User";
       try {
         const res = await fetch("http://localhost:8000/signup", {
@@ -81,9 +81,6 @@ const Signup = () => {
           <p ref={mailWarning} className={styles.mailWarning}>
             Please enter valid mail
           </p>
-          <p ref={warning} className={styles.warning}>
-            already used email
-          </p>
           <label>Password</label>
           <input
             id="password"
@@ -94,7 +91,7 @@ const Signup = () => {
             }}
           />
           <p ref={passwordWarning} className={styles.passwordWarning}>
-            password must be more than 5 characters
+            Password should be at least 8 characters long
           </p>
           <label>Confirm Password</label>
           <input

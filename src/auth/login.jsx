@@ -16,7 +16,7 @@ const Login = () => {
   //
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const warning = useRef();
+  const [error, setError] = useState(false);
 
   // login
   async function login(e) {
@@ -32,6 +32,8 @@ const Login = () => {
       const data = await res.json();
       if (data.userId) {
         navigate("/");
+      } else {
+        setError(data.message);
       }
     } catch (err) {
       console.log(err);
@@ -61,9 +63,7 @@ const Login = () => {
               setPassword(e.target.value);
             }}
           />
-          <p ref={warning} className={styles.warning}>
-            wrong password or email
-          </p>
+          {error && <p style={{color:"red"}}>{error}</p>}
           <button id="loginBtn" onClick={login}>
             Log In
           </button>
