@@ -1,10 +1,28 @@
-import "./App.css"
-function App() {
-  return (
+// pages
+import Login from "./auth/login";
+import Signup from "./auth/signup";
+// components
+import Main from "./components/main";
+//css
+import "./App.css";
+// routing
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider,
+} from "react-router-dom";
+const appRouter = createBrowserRouter(
+  createRoutesFromElements(
     <>
-      <h1>app</h1>
+      <Route path="/login" element={<Login />} />
+      <Route path="/signup" element={<Signup />} />
+      <Route path="/*" element={<Main />} />
     </>
-  );
+  )
+);
+function App() {
+  return <RouterProvider router={appRouter} />;
 }
 
 export default App;
