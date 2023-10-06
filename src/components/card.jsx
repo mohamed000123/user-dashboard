@@ -2,6 +2,10 @@ export default function BasicCard({ parcel }) {
   return (
     <div className="parcel" key={parcel.id}>
       <p>
+        parcel name:
+        <span style={{ color: "blue" }}>{parcel.name}</span>
+      </p>
+      <p>
         pickup location:
         <span style={{ color: "blue" }}>{parcel.pickupAddress}</span>
       </p>
