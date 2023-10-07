@@ -42,25 +42,28 @@ const Signup = () => {
       passwordConfirmWarning.current.style.display = "none";
       setIisValiedPassword(true);
     }
-    if (isValiedMail && password.length && isValiedPassword) {
-      const type = "User";
-      try {
-        const res = await fetch("http://localhost:8000/signup", {
-          method: "POST",
-          body: JSON.stringify({ email, password, type }),
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-        });
-        const data = await res.json();
-        if (data.userId) {
-          navigate("/");
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    }
   }
-
+  useEffect(() => {
+    (async function () {
+      if (isValiedMail && isValiedPassword) {
+        const type = "User";
+        try {
+          const res = await fetch("http://localhost:8000/signup", {
+            method: "POST",
+            body: JSON.stringify({ email, password, type }),
+            headers: { "Content-Type": "application/json" },
+            credentials: "include",
+          });
+          const data = await res.json();
+          if (data.userId) {
+            navigate("/");
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    })();
+  }, [isValiedMail]);
   return (
     <>
       <div className={styles.container}>
