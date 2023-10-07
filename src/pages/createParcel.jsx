@@ -5,7 +5,8 @@ import { useState } from "react";
 // routing
 import { useNavigate } from "react-router-dom";
 function CreateParcel() {
-  const [name, setName] = useState("");
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
   const [pickup, setPickup] = useState("");
   const [dropOff, setdropOff] = useState("");
   const [error, setError] = useState(false);
@@ -18,7 +19,8 @@ function CreateParcel() {
         body: JSON.stringify({
           pickupAddress: pickup,
           deliveryAddress: dropOff,
-          name: name,
+          title: title,
+          description: description,
         }),
         headers: { "Content-Type": "application/json" },
         credentials: "include",
@@ -38,14 +40,22 @@ function CreateParcel() {
       <div className={styles.container}>
         <form className={styles.form} onSubmit={addParcel}>
           <h3>create new parcel</h3>
-          <label>name</label>
+          <label>title</label>
           <input
             type="text"
-            placeholder="parcel name"
+            placeholder="parcel title"
             onChange={(e) => {
-              setName(e.target.value);
+              setTitle(e.target.value);
             }}
             required
+          />
+          <label>description</label>
+          <input
+            type="text"
+            placeholder="parcel description"
+            onChange={(e) => {
+              setDescription(e.target.value);
+            }}
           />
           <label>pickup address</label>
           <input

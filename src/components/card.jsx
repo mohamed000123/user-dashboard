@@ -1,11 +1,29 @@
 export default function BasicCard({ parcels }) {
+  function displayData_Time(savedDateTime) {
+    const dateTime = new Date(savedDateTime);
+    const options = {
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      hour: "numeric",
+      minute: "numeric",
+    };
+    const formattedDateTime = dateTime.toLocaleString(undefined, options);
+    return formattedDateTime;
+  }
   return parcels.map((parcel) => {
     return (
       <div className="parcel" key={parcel.id}>
         <p>
-          parcel name:
-          <span style={{ color: "blue" }}>{parcel.name}</span>
+          title:
+          <span style={{ color: "blue" }}>{parcel.title}</span>
         </p>
+        {parcel.description && (
+          <p>
+            description:
+            <span style={{ color: "blue" }}>{parcel.description}</span>
+          </p>
+        )}
         <p>
           pickup location:
           <span style={{ color: "blue" }}>{parcel.pickupAddress}</span>
@@ -28,6 +46,28 @@ export default function BasicCard({ parcels }) {
             {parcel.status}
           </span>
         </p>
+        <p>
+          create date:
+          <span style={{ color: "green" }}>
+            {displayData_Time(parcel.createdAt)}
+          </span>
+        </p>
+        {parcel.pickUpDate && (
+          <p>
+            pickup date:
+            <span style={{ color: "green" }}>
+              {displayData_Time(parcel.pickUpDate)}
+            </span>
+          </p>
+        )}
+        {parcel.deliveryDate && (
+          <p>
+            delivery date:
+            <span style={{ color: "green" }}>
+              {displayData_Time(parcel.deliveryDate)}
+            </span>
+          </p>
+        )}
       </div>
     );
   });

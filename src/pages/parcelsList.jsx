@@ -22,11 +22,10 @@ function ParcelsList() {
     setSelectedValue(event.target.value);
   };
   useEffect(() => {
-    console.log(parcels);
     const result = parcels.filter((parcel) => {
-      return parcel.status == selectedValue;
+      return parcel.status === selectedValue;
     });
-    if (selectedValue != "") {
+    if (selectedValue !== "") {
       setFilteredParcels(result);
     }
   }, [selectedValue]);
