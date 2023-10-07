@@ -1,9 +1,9 @@
 // styling
 import styles from "../auth/login.module.css";
 // react
-import { useEffect, useState, useRef } from "react";
+import { useState } from "react";
 // routing
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 function CreateParcel() {
   const [name, setName] = useState("");
   const [pickup, setPickup] = useState("");

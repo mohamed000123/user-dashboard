@@ -1,30 +1,46 @@
 import { useEffect, useState } from "react";
 import BasicCard from "../components/card";
+import BasicSelect from "../components/dropDown";
 function ParcelsList() {
   const [parcels, setParcels] = useState([]);
+  const [filteredParcels, setFilteredParcels] = useState(null);
+  const [selectedValue, setSelectedValue] = useState("");
   useEffect(() => {
-    async function getData() {
+    (async function () {
       try {
-        const res = await fetch(
-          `http://localhost:8000/all-parcels/user`,
-          {
-            credentials: "include",
-          }
-        );
+        const res = await fetch(`http://localhost:8000/all-parcels/user`, {
+          credentials: "include",
+        });
         const data = await res.json();
         setParcels(data);
       } catch (err) {
         console.log(err);
       }
-    }
-    getData();
+    })();
   }, []);
+  const handleDropdownChange = (event) => {
+    setSelectedValue(event.target.value);
+  };
+  useEffect(() => {
+    console.log(parcels);
+    const result = parcels.filter((parcel) => {
+      return parcel.status == selectedValue;
+    });
+    if (selectedValue != "") {
+      setFilteredParcels(result);
+    }
+  }, [selectedValue]);
   return (
     <>
       <div className="container">
-        {parcels.map((parcel) => {
-          return <BasicCard parcel={parcel} key={parcel.id}></BasicCard>;
-        })}
+        <BasicSelect
+          handleDropdownChange={handleDropdownChange}
+          selectedValue={selectedValue}
+        />
+
+        <BasicCard
+          parcels={filteredParcels ? filteredParcels : parcels}
+        ></BasicCard>
       </div>
     </>
   );
