@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import BasicCard from "../components/card";
 import BasicSelect from "../components/dropDown";
+import noParcels from "../assets/noParcels.png";
 function ParcelsList() {
   const [parcels, setParcels] = useState([]);
   const [filteredParcels, setFilteredParcels] = useState(null);
@@ -32,14 +33,22 @@ function ParcelsList() {
   return (
     <>
       <div className="container">
-        <BasicSelect
-          handleDropdownChange={handleDropdownChange}
-          selectedValue={selectedValue}
-        />
-
-        <BasicCard
-          parcels={filteredParcels ? filteredParcels : parcels}
-        ></BasicCard>
+        {!parcels ? (
+          <>
+            <h2>you don't have parcels yet</h2>
+            <img src={noParcels} className="noParcels" />
+          </>
+        ) : (
+          <>
+            <BasicSelect
+              handleDropdownChange={handleDropdownChange}
+              selectedValue={selectedValue}
+            />
+            <BasicCard
+              parcels={filteredParcels ? filteredParcels : parcels}
+            ></BasicCard>
+          </>
+        )}
       </div>
     </>
   );
