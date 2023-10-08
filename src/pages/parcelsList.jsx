@@ -4,6 +4,7 @@ import BasicSelect from "../components/dropDown";
 import noParcels from "../assets/noParcels.png";
 function ParcelsList() {
   const [parcels, setParcels] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [filteredParcels, setFilteredParcels] = useState(null);
   const [selectedValue, setSelectedValue] = useState("");
   useEffect(() => {
@@ -14,8 +15,10 @@ function ParcelsList() {
         });
         const data = await res.json();
         setParcels(data);
+        setIsLoading(false);
       } catch (err) {
         console.log(err);
+        setIsLoading(false);
       }
     })();
   }, []);
@@ -30,10 +33,13 @@ function ParcelsList() {
       setFilteredParcels(result);
     }
   }, [selectedValue]);
+  if (isLoading) {
+    return <div></div>;
+  }
   return (
     <>
       <div className="container">
-        {parcels.length>0 ? (
+        {parcels.length > 0 ? (
           <>
             <BasicSelect
               handleDropdownChange={handleDropdownChange}
