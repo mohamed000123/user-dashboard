@@ -33,12 +33,7 @@ function ParcelsList() {
   return (
     <>
       <div className="container">
-        {!parcels ? (
-          <>
-            <h2>you don't have parcels yet</h2>
-            <img src={noParcels} className="noParcels" />
-          </>
-        ) : (
+        {parcels.length>0 ? (
           <>
             <BasicSelect
               handleDropdownChange={handleDropdownChange}
@@ -47,6 +42,11 @@ function ParcelsList() {
             <BasicCard
               parcels={filteredParcels ? filteredParcels : parcels}
             ></BasicCard>
+          </>
+        ) : (
+          <>
+            <h2>you don't have parcels yet</h2>
+            <img src={noParcels} className="noParcels" />
           </>
         )}
       </div>
