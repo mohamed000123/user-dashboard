@@ -17,12 +17,15 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isValiedMail, setIsValidMail] = useState(false);
   const [isValiedPassword, setIisValiedPassword] = useState(false);
+  const [signupError, setSignupError] = useState(null);
   const mailWarning = useRef();
   const passwordWarning = useRef();
   const passwordConfirmWarning = useRef();
-
+  const [signupBtn, setSignupBtn] = useState(false);
+  // signup validation
   async function signUp(e) {
     e.preventDefault();
+    setSignupBtn(true);
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const emailIsValid = emailRegex.test(email);
     if (!emailIsValid) {
@@ -43,27 +46,33 @@ const Signup = () => {
       setIisValiedPassword(true);
     }
   }
+  //signup
   useEffect(() => {
     (async function () {
-      if (isValiedMail && isValiedPassword) {
-        const type = "User";
-        try {
-          const res = await fetch("http://localhost:8000/signup", {
-            method: "POST",
-            body: JSON.stringify({ email, password, type }),
-            headers: { "Content-Type": "application/json" },
-            credentials: "include",
-          });
-          const data = await res.json();
-          if (data.userId) {
-            navigate("/");
+      if (signupBtn) {
+        if (isValiedMail && isValiedPassword) {
+          const type = "User";
+          try {
+            const res = await fetch("http://localhost:8000/signup", {
+              method: "POST",
+              body: JSON.stringify({ email, password, type }),
+              headers: { "Content-Type": "application/json" },
+              credentials: "include",
+            });
+            const data = await res.json();
+            if (data.userId) {
+              navigate("/");
+            } else {
+              setSignupError(data);
+            }
+          } catch (err) {
+            console.log(err);
           }
-        } catch (err) {
-          console.log(err);
         }
+        setSignupBtn(false);
       }
     })();
-  }, [isValiedMail]);
+  }, [signupBtn]);
   return (
     <>
       <div className={styles.container}>
@@ -105,6 +114,7 @@ const Signup = () => {
           <p ref={passwordConfirmWarning} className={styles.warning}>
             unmatched password
           </p>
+          {signupError && <p style={{ color: "red" }}>{signupError}</p>}
           <button id="btn" onClick={signUp}>
             Sign Up
           </button>
